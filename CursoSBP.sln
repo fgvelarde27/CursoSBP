@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursoSBP.Data", "CursoSBP.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursoSBP.Common", "CursoSBP.Common\CursoSBP.Common.csproj", "{9FCA5CDD-D966-4CA5-B607-5C26582D9C7A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursoSBP.WebAPI", "CursoSBP.WebAPI\CursoSBP.WebAPI.csproj", "{F66DE578-F62F-4859-A01F-8FB1F01223C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9FCA5CDD-D966-4CA5-B607-5C26582D9C7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FCA5CDD-D966-4CA5-B607-5C26582D9C7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FCA5CDD-D966-4CA5-B607-5C26582D9C7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F66DE578-F62F-4859-A01F-8FB1F01223C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F66DE578-F62F-4859-A01F-8FB1F01223C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F66DE578-F62F-4859-A01F-8FB1F01223C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F66DE578-F62F-4859-A01F-8FB1F01223C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
