@@ -1,15 +1,22 @@
 using CursoSBP.Data;
+using CursoSBP.Data.Interface;
 using Microsoft.EntityFrameworkCore;
-
+using CursoSBP.Data.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>(conexion => conexion.UseSqlServer(builder.Configuration.GetConnectionString("ConexionCursoSBP")));
+var ConnectionString = builder.Configuration.GetConnectionString("ConexionCursoSBP");
+builder.Services.AddDbContext<DataContext>(options => 
+options.UseSqlServer(ConnectionString, sqlOption =>
+            sqlOption.UseNetTopologySuite()
+         ));
+builder.Services.AddScoped<IStudentService, StudentService>();
+//AddScoped 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

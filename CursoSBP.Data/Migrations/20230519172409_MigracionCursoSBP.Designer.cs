@@ -6,14 +6,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using NetTopologySuite.Geometries;
 
 #nullable disable
 
 namespace CursoSBP.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230517174110_InitialDataBase")]
-    partial class InitialDataBase
+    [Migration("20230519172409_MigracionCursoSBP")]
+    partial class MigracionCursoSBP
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +26,34 @@ namespace CursoSBP.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("CursoSBP.Common.Models.Entities.Campus", b =>
+                {
+                    b.Property<int>("CampusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CampusId"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CampusName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Point>("Geography")
+                        .IsRequired()
+                        .HasColumnType("geography");
+
+                    b.Property<string>("Url")
+                        .HasMaxLength(500)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(500)");
+
+                    b.HasKey("CampusId");
+
+                    b.ToTable("Campus");
+                });
+
             modelBuilder.Entity("CursoSBP.Common.Models.Entities.Schedule", b =>
                 {
                     b.Property<int>("Id")
@@ -34,7 +63,8 @@ namespace CursoSBP.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Classroom")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
@@ -45,14 +75,14 @@ namespace CursoSBP.Data.Migrations
                     b.Property<int?>("StudentScheduleId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SubjectScheduleId")
+                    b.Property<int?>("SubjectScheduleSubjectId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("StudentScheduleId");
 
-                    b.HasIndex("SubjectScheduleId");
+                    b.HasIndex("SubjectScheduleSubjectId");
 
                     b.ToTable("schedules");
                 });
@@ -66,22 +96,29 @@ namespace CursoSBP.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("Bithdate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("Date");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
 
                     b.Property<int>("StudentGender")
                         .HasColumnType("int");
@@ -99,17 +136,23 @@ namespace CursoSBP.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubjectId"));
 
+                    b.Property<decimal>("CostPerCycle")
+                        .HasColumnType("money");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Object")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("SubjectName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Teacher")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("SubjectId");
 
@@ -122,9 +165,9 @@ namespace CursoSBP.Data.Migrations
                         .WithMany()
                         .HasForeignKey("StudentScheduleId");
 
-                    b.HasOne("CursoSBP.Common.Models.Entities.Schedule", "SubjectSchedule")
+                    b.HasOne("CursoSBP.Common.Models.Entities.Subject", "SubjectSchedule")
                         .WithMany()
-                        .HasForeignKey("SubjectScheduleId");
+                        .HasForeignKey("SubjectScheduleSubjectId");
 
                     b.Navigation("StudentSchedule");
 
