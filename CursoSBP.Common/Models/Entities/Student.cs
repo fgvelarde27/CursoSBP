@@ -7,28 +7,47 @@ namespace CursoSBP.Common.Models.Entities
 {
     public class Student
     {
-        public int Id { get; set; } 
-        //hace un referencia foreing key hacia la tabla Campus
-       
+      
         public HashSet<Campus>? Campus { get; set; } // define que la relcion es de muchos a muchos entre la tabla Student y Campus.
-        [StringLength(50)]
-        [Required (ErrorMessage ="*El campo nombre es obligatorio.")]
+        public int Id { get; set; }
+        //hace un referencia foreing key hacia la tabla Campus
+
         public string? FirstName { get; set; }
-        [StringLength(50)]
-        public string LastName { get; set; } = default!;
-        [DataType(DataType.Date)]
-        public DateTime Bithdate { get; set; }
-        [StringLength(100)]
+        public string? LastName { get; set; }
+        public DateTime? Birthdate { get; set; }
 
+        [EmailAddress(ErrorMessage = "Debe ingresar un correo válido.")]
         public string? Email { get; set; }
-        [StringLength(9)]
-
         public string? Phone { get; set; }
-        [StringLength(200)]
-
         public string? Address { get; set; }
-
         public Gender StudentGender { get; set; }
-       
+
+        #region Mapping for create or update
+        public async Task<bool> MapToStudentEntity(Student s)
+        {
+            try
+            {
+                s.Id = Id;
+                if (FirstName is not null)
+                    s.FirstName = FirstName;
+                if (LastName is not null)
+                    s.LastName = LastName;
+                if (Birthdate is not null)
+                    s.Birthdate = Birthdate;
+                if (Email is not null)
+                    s.Email = Email;
+                if (Phone is not null)
+                    s.Phone = Phone;
+                if (Address is not null)
+                    s.Address = Address;
+                s.StudentGender = StudentGender;
+                return await Task.FromResult(true);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        #endregion
     }
 }

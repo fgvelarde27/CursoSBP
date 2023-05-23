@@ -8,6 +8,9 @@ namespace CursoSBP.Data.Interface
         Task<IEnumerable<Student>?> GetStudentsAsync();
 
         Task<Student?> GetUniqueStudentAsync(int id);
-        Task<Response> SaveNewStudentAsync(Student student);
+        Task<bool> AddNewStudentAsync(Student student);
+        Task<bool> UpdateStudentAsync(int id, Student student);
+        Task<bool> DeleteStudentAsync(int id);
+
     }
 }

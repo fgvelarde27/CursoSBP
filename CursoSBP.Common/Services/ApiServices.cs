@@ -2,26 +2,39 @@
 
 namespace CursoSBP.Common.Services
 {
-    public class ApiServices : IApiServices
+    public interface IApiService
     {
-        public Response DeleteApi(string url, string controller, string endpoint)
-        {
-            throw new NotImplementedException();
-        }
+        #region Unsecure calls
+        Task<Response<object>> GetListAsync<T>(
+            string urlBase,
+            string servicePrefix,
+            string controller);
 
-        public Response GetApi(string url, string controller, string endpoint)
-        {
-            throw new NotImplementedException();
-        }
+        Task<Response<object>> GetSingleAsync<T>(
+            string urlBase,
+            string servicePrefix,
+            string controller,
+            int id);
 
-        public Response PostApi(string url, string controller, string endpoint)
-        {
-            throw new NotImplementedException();
-        }
+        Task<Response<object>> PostAsync<T>(
+            string urlBase,
+            string servicePrefix,
+            string controller,
+            T model);
 
-        public Response PutApi(string url, string controller, string endpoint)
-        {
-            throw new NotImplementedException();
-        }
+        Task<Response<object>> PutAsync<T>(
+            string urlBase,
+            string servicePrefix,
+            string controller,
+            int id,
+            T model);
+
+        Task<Response<object>> DeleteAsync<T>(
+            string urlBase,
+            string servicePrefix,
+            string controller,
+            int id);
+
+        #endregion
     }
 }

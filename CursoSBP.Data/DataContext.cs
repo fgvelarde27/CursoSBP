@@ -1,5 +1,6 @@
 ﻿using CursoSBP.Common.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace CursoSBP.Data
 {
@@ -17,16 +18,25 @@ namespace CursoSBP.Data
 
 
         #endregion
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Subject>(e =>
+        //    {
+        //        e.Property(p => p.CostPerCycle).HasColumnType("money");
+
+        //    });
+        //    modelBuilder.Entity<Student>(e =>
+        //    { e.Property(p => p.Bithdate).HasColumnType("Date"); 
+        //    });
+        //}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Subject>(e =>
-            {
-                e.Property(p => p.CostPerCycle).HasColumnType("money");
-
-            });
-            modelBuilder.Entity<Student>(e =>
-            { e.Property(p => p.Bithdate).HasColumnType("Date"); 
-            });
+            base.OnModelCreating(modelBuilder);
+            //modelBuilder.ApplyConfiguration(new StudentConfig());
+            //modelBuilder.ApplyConfiguration(new SubjectConfig());
+            //modelBuilder.ApplyConfiguration(new CampusConfig());
+            //modelBuilder.ApplyConfiguration(new ScheduleConfig());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(Student))!);
         }
     }
 }
